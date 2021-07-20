@@ -1,4 +1,5 @@
-# Neurovisual-control-celeste
+# Neurovisual Control Celeste
 
-pip install opencv-python  
-pip install pypiwin32
+Neurovisual control to the digital game Celeste.  
+
+@TODO: describe the project
