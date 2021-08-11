@@ -1,59 +1,48 @@
-# Credits for https://www.youtube.com/watch?v=WymCpVUPWQ4
-
 import cv2 as cv
-from time import time
+import pygetwindow
+import time as timestamp
 
 from window_capture import WindowCapture
 
 
-# Frames from a window
-# @TODO: capture frames from fullscreen application
-def frame_capture_from_window(name_window, samples_path):
-    # Initialize the WindowCapture class
-    win_cap = WindowCapture(name_window)
+def image_shrinking(image, scale=3):
+    width = int(image.shape[1] / scale)
+    height = int(image.shape[0] / scale)
+    dimension = (width, height)
 
-    loop_time = time()
+    # Resize image: Enlarging (INTER_LINEAR or INTER_CUBIC), shrinking (INTER_AREA)
+    return cv.resize(image, dimension, interpolation=cv.INTER_AREA)
+
+
+# TODO: Preprocessing image (particles and background), image segmentation.
+def frames_from_window(window_name, samples_path, runtime=5):
+    # Initialize the WindowCapture class
+    win_cap = WindowCapture(window_name)
+
+    loop_time = timestamp.time()
+    loop_end = loop_time + runtime
     count = 0
-    while count <= 30:
+
+    while timestamp.time() < loop_end:
         # Get an updated image of the window
         screenshot = win_cap.get_screenshot()
 
+        # Reduces the captured image
+        screenshot = image_shrinking(screenshot)
+
+        # Save the captured image
         cv.imwrite(samples_path + "frame_%d.png" % count, screenshot)
         count += 1
 
         # Debug the loop rate
-        print("FPS {}".format(1 / (time() - loop_time)))
+        print("FPS {}".format(1 / (timestamp.time() - loop_time)))
+        loop_time = timestamp.time()
 
-        loop_time = time()
-
-# Every frame from a video
-def frame_capture_from_video(video_path, samples_path):
-    video_obj = cv.VideoCapture(video_path)
-
-    if video_obj.isOpened():
-        current_frame = 0
-        success = 1
-
-        while success:
-            success, frame = video_obj.read()
-
-            if success:
-                filename = samples_path + "./video/samples/frame_%d.jpg" % current_frame
-                print("Creating file... " + filename)
-
-                cv.imwrite(filename, frame)
-                current_frame += 1
-
-        video_obj.release()
-
-    cv.destroyAllWindows()
 
 if __name__ == '__main__':
     print("Begin")
 
-    # frame_capture_from_video("./video/test.mp4", "./samples/")
-    # print(pygetwindow.getAllTitles())
-
-    frame_capture_from_window("Discord", "../samples/")
+    print(pygetwindow.getAllTitles())
+    frames_from_window("Celeste", "../samples/", 1)
 
     print("Done")

@@ -1,5 +1,12 @@
 # Neurovisual Control Celeste
 
-Neurovisual control to the digital game Celeste.  
+Describe the project...
 
-@TODO: describe the project
+## Packages
+
+```shell
+pip install opencv-python
+pip install PyGetWindow
+```
+
+

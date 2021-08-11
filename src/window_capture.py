@@ -28,13 +28,13 @@ class WindowCapture:
         self.w = window_rect[2] - window_rect[0]
         self.h = window_rect[3] - window_rect[1]
 
-        # Account for the window border and titlebar and cut them off
+        # Account for the window border and title bar and cut them off
         border_pixels = 8
-        titlebar_pixels = 30
+        title_bar_pixels = 31
         self.w = self.w - (border_pixels * 2)
-        self.h = self.h - titlebar_pixels - border_pixels
+        self.h = self.h - title_bar_pixels - border_pixels
         self.cropped_x = border_pixels
-        self.cropped_y = titlebar_pixels
+        self.cropped_y = title_bar_pixels
 
         # Set the cropped coordinates offset so we can translate screenshot
         # Images into actual screen positions
