@@ -1,51 +1,8 @@
 import cv2 as cv
+import numpy as np
 import pygetwindow
-import time as timestamp
 
-from window_capture import WindowCapture
-import segment
-
-
-def image_shrinking(image, scale=3):
-    width = int(image.shape[1] / scale)
-    height = int(image.shape[0] / scale)
-    dimension = (width, height)
-
-    # Resize image: Enlarging (INTER_LINEAR or INTER_CUBIC), shrinking (INTER_AREA)
-    return cv.resize(image, dimension, interpolation=cv.INTER_AREA)
-
-
-def image_pre_processing(image):
-    image = cv.cvtColor(image, cv.COLOR_BGR2RGB)
-    image = cv.medianBlur(image, 3)
-
-    return image
-
-
-def frames_from_window(window_name, samples_path, runtime=5):
-    # Initialize the WindowCapture class
-    win_cap = WindowCapture(window_name)
-
-    loop_time = timestamp.time()
-    loop_end = loop_time + runtime
-    count = 0
-
-    while timestamp.time() < loop_end:
-        # Get an updated image of the window
-        screenshot = win_cap.get_screenshot()
-
-        # Reduces the captured image
-        image = image_shrinking(screenshot)
-        image = image_pre_processing(image)
-        image = segment.k_means_color_quantization(image)
-
-        # Save the captured image
-        cv.imwrite(samples_path + "frame_%d.png" % count, image)
-        count += 1
-
-        # Debug the loop rate
-        print("FPS {}".format(1 / (timestamp.time() - loop_time)))
-        loop_time = timestamp.time()
+import digital_image_processing as dip
 
 
 def simple_threshold(image):
@@ -104,18 +61,14 @@ if __name__ == '__main__':
     print("Begin")
 
     # print(pygetwindow.getAllTitles())
-    frames_from_window("Celeste", "../samples/", 1)
 
     # thresholding()
 
-    # image = cv.imread("../samples/frame_0.png")
-    # cv.imshow("Original", image)
+    # dip.frames_from_window("Celeste", "../samples/processed/", 8)
 
-    # img_k3 = segment.k_means_color_quantization(image)
-    # cv.imshow("k-means: 3", img_k3)
-
-    # img_k4 = segment.k_means_color_quantization(image, 4)
-    # cv.imshow("k-means: 4", img_k4)
+    # Background subtractor tests - MOG, GMG, LSBP, CNT, GSOC
+    dip.background_subtractor_video_test("../samples/celeste-test.mp4", "CNT")
+    dip.background_subtractor_images_test("../samples/processed/", "CNT")
 
     cv.waitKey()
 
