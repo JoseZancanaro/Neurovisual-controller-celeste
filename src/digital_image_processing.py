@@ -1,9 +1,7 @@
 import cv2 as cv
 import numpy as np
 import time as timestamp
-
 import os
-from pathlib import Path
 
 from window_capture import WindowCapture
 
@@ -36,9 +34,9 @@ def k_means_color_quantization(image, k=3):
     criteria = (cv.TERM_CRITERIA_EPS + cv.TERM_CRITERIA_MAX_ITER, 100, 1.0)
     compactness, labels, centers = cv.kmeans(pixel_values, k, None, criteria, 10, cv.KMEANS_RANDOM_CENTERS)
 
-    print("Compactness: ", compactness)
-    print("\nLabels: ", labels)
-    print("\nCenters: ", centers)
+    # print("Compactness: ", compactness)
+    # print("\nLabels: ", labels)
+    # print("\nCenters: ", centers)
 
     # convert back to 8 bit values
     center = np.uint8(centers)
@@ -62,44 +60,63 @@ def frames_from_window(window_name, samples_path, runtime=5):
     loop_end = loop_time + runtime
     count = 0
 
-    while timestamp.time() < loop_end:
+    while True: #timestamp.time() < loop_end:
         # Get an updated image of the window
         screenshot = win_cap.get_screenshot()
 
         # Reduces the captured image, pre-processing and k-means
-        image = shrinking(screenshot)
-        image = pre_processing(image)
-        image = k_means_color_quantization(image)
+        native = shrinking(screenshot)
+        image = pre_processing(native)
+        kmeans = k_means_color_quantization(image)
 
-        # @TODO: applies background subtractor
+        # @TODO: applies Madeline tracking
+        back_sub = cv.createBackgroundSubtractorMOG2()
+        tracking = back_sub.apply(kmeans)
+
+        # Prints
+        cv.imshow("Native resolution", native)
+        cv.imshow("K-means quantization", kmeans)
+        cv.imshow("Madeline tracking", tracking)
+
+        key = cv.waitKey(30) & 0xff
+        if key == 27:
+            break
 
         # Save the captured image
-        cv.imwrite(samples_path + "frame_%d.png" % count, image)
-        count += 1
+        # cv.imwrite(samples_path + "frame_%d.png" % count, image)
+        # count += 1
 
         # Debug the loop rate
         print("FPS {}".format(1 / (timestamp.time() - loop_time)))
         loop_time = timestamp.time()
 
+    cv.destroyAllWindows()
+
 
 # https://docs.opencv.org/4.5.1/d8/d38/tutorial_bgsegm_bg_subtraction.html
 # https://docs.opencv.org/4.5.2/d2/d55/group__bgsegm.html
 def background_subtractor_type(bs_type):
-    if bs_type == "GMG":
-        back_sub = cv.bgsegm.createBackgroundSubtractorGMG()
+    if bs_type == "MOG2":
+        back_sub = cv.createBackgroundSubtractorMOG2(history=30, varThreshold=16, detectShadows=False)
+    elif bs_type == "KNN":
+        back_sub = cv.createBackgroundSubtractorKNN(history=30, dist2Threshold=400.0, detectShadows=False)
+    elif bs_type == "GMG":
+        back_sub = cv.bgsegm.createBackgroundSubtractorGMG(initializationFrames=1, decisionThreshold=0.8)
     elif bs_type == "LSBP":
+        # Muitos parâmetros, rip
         back_sub = cv.bgsegm.createBackgroundSubtractorLSBP()
     elif bs_type == "CNT":
-        back_sub = cv.bgsegm.createBackgroundSubtractorCNT()
+        back_sub = cv.bgsegm.createBackgroundSubtractorCNT(minPixelStability=5, useHistory=False, maxPixelStability=5*10, isParallel=True)
     elif bs_type == "GSOC":
+        # Muitos parâmetros, rip
         back_sub = cv.bgsegm.createBackgroundSubtractorGSOC()
     else:
-        back_sub = cv.bgsegm.createBackgroundSubtractorMOG()
+        back_sub = cv.bgsegm.createBackgroundSubtractorMOG(history=30, nmixtures=5, backgroundRatio=0.85, noiseSigma=0)
 
     return back_sub
 
 
-def background_subtractor_video_test(video_path, bs_type="MOG"):
+def background_subtractor_video_test(video_path, bs_type="MOG2"):
     cap = cv.VideoCapture(video_path)
 
     back_sub = background_subtractor_type(bs_type)
@@ -117,7 +134,7 @@ def background_subtractor_video_test(video_path, bs_type="MOG"):
     cv.destroyAllWindows()
 
 
-def background_subtractor_images_test(images_path, bs_type="MOG"):
+def background_subtractor_images_test(images_path, bs_type="MOG2"):
     back_sub = background_subtractor_type(bs_type)
 
     # Take the origin directory, change to images path, sort and restore to origin directory

@@ -64,11 +64,13 @@ if __name__ == '__main__':
 
     # thresholding()
 
-    # dip.frames_from_window("Celeste", "../samples/processed/", 8)
+    # dip.frames_from_window("Celeste", "../samples/processed/")
 
-    # Background subtractor tests - MOG, GMG, LSBP, CNT, GSOC
-    dip.background_subtractor_video_test("../samples/celeste-test.mp4", "CNT")
-    dip.background_subtractor_images_test("../samples/processed/", "CNT")
+    # Background subtractor tests - Opencv (MOG2, KNN), Opencv contribute: (GMG, LSBP, CNT, GSOC, MOG)
+    # dip.background_subtractor_video_test("../samples/celeste-test.mp4", "CNT")
+    dip.background_subtractor_images_test("../samples/processed/", "MOG")
+
+    # @TODO: VGG16 model with Keras - https://www.tensorflow.org/api_docs/python/tf/keras/applications/vgg16/VGG16
 
     cv.waitKey()
 

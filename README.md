@@ -6,9 +6,18 @@ Describe the project...
 
 ```shell
 pip install opencv-python
+```
+
+### Optional packages
+
+To get the target application window name
+```shell
 pip install PyGetWindow
 ```
 
-cv.bgsegm
+
+To have more background subtraction methods (opencv.bgsegm)
+```shell
 pip install opencv-contrib-python
+```
 
