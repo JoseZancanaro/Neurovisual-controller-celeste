@@ -120,13 +120,17 @@ def frames_from_window(window_name, samples_path, runtime=5):
     loop_end = loop_time + runtime
     count = 0
 
-    tracker = EuclideanDistTracker()
+    # tracker = EuclideanDistTracker()
 
     # Opencv (MOG2, KNN), Opencv contribute: (GMG, LSBP, CNT, GSOC, MOG)
-    back_sub_type = "MOG2"
-    back_sub = background_subtractor_type(back_sub_type)
+    # back_sub_type = "MOG2"
+    # back_sub = background_subtractor_type(back_sub_type)
 
-    while True: #timestamp.time() < loop_end:
+    tracker = cv.TrackerCSRT_create()
+    bbox = (5, 110, 20, 40)  # native(320x180) - roi(5, 110, 20, 40) - another(5, 60, 30, 100)
+    first_frame = True
+
+    while True:  # timestamp.time() < loop_end:
         # Get an updated image of the window
         screenshot = win_cap.get_screenshot()
 
@@ -136,13 +140,21 @@ def frames_from_window(window_name, samples_path, runtime=5):
         kmeans = k_means_color_quantization(image)
 
         # @TODO: applies Madeline tracking
-        back_sub_tracking = back_sub.apply(kmeans)
+        # back_sub_tracking = back_sub.apply(kmeans)
         # object_tracking = tracking_detection(kmeans, tracker, back_sub)
+
+        # CSRT Tracking tests
+        if first_frame:
+            # bbox = cv.selectROI(native, False)
+            tracker.init(native, bbox)
+            first_frame = False
+
+        csrt_tracking_test(native, tracker)
 
         # Prints
         # cv.imshow("Native resolution", native)
-        cv.imshow("K-means quantization", kmeans)
-        cv.imshow("Madeline tracking " + back_sub_type, back_sub_tracking)
+        # cv.imshow("K-means quantization", kmeans)
+        # cv.imshow("Madeline tracking ", tracking)
 
         key = cv.waitKey(30) & 0xff
         if key == 27:
@@ -281,7 +293,7 @@ def object_tracking_images_test(images_path):
         # cv.imshow("Images", frame)
 
         mask = tracking_detection(frame, tracker, back_sub)
-        # cv.imshow("Mask", mask)
+        cv.imshow("Mask", mask)
 
         key = cv.waitKey(30)
         if key == 27:
@@ -420,3 +432,58 @@ def image_registration_three(frame, model):
     # Save the output.
     # cv2.imwrite('output.jpg', transformed_img)
 
+
+# https://learnopencv.com/object-tracking-using-opencv-cpp-python/
+def csrt_tracking_test(frame, tracker):
+    # Update tracker
+    ok, bbox = tracker.update(frame)
+
+    # Draw bounding box
+    if ok:
+        # Tracking success
+        p1 = (int(bbox[0]), int(bbox[1]))
+        p2 = (int(bbox[0] + bbox[2]), int(bbox[1] + bbox[3]))
+        cv.rectangle(frame, p1, p2, (255, 0, 0), 2, 1)
+        print("safe")
+    else:
+        # Tracking failure
+        cv.putText(frame, "Bucha", (100, 80), cv.FONT_HERSHEY_SIMPLEX, 0.75, (0, 0, 255), 2)
+
+    # Display tracker type on frame
+    # cv.putText(frame, tracker_type + " Tracker", (100, 20), cv.FONT_HERSHEY_SIMPLEX, 0.75, (50, 170, 50), 2);
+
+    # Display FPS on frame
+    # cv.putText(frame, "FPS : " + str(int(fps)), (100, 50), cv.FONT_HERSHEY_SIMPLEX, 0.75, (50, 170, 50), 2);
+
+    # Display result
+    cv.imshow("Tracking", frame)
+
+
+# https://github.com/jagracar/OpenCV-python-tests/blob/master/OpenCV-tutorials/featureDetection/fast.py
+def fast_feature_detector_test(filename):
+    # Grayscale
+    img = cv.imread(filename, 0)
+
+    # Initiate FAST object with default values
+    fast = cv.FastFeatureDetector_create()  # threshold=25
+
+    # find and draw the keypoints
+    kp = fast.detect(img, None)
+    img2 = cv.drawKeypoints(img, kp, None, color=(255, 0, 0))
+
+    print("Threshold: ", fast.getThreshold())
+    print("nonmaxSuppression: ", fast.getNonmaxSuppression())
+    print("neighborhood: ", fast.getType())
+    print("Total Keypoints with nonmaxSuppression: ", len(kp))
+
+    cv.imshow("fast_true", img2)
+
+    # Disable nonmaxSuppression
+    fast.setNonmaxSuppression(0)
+    kp = fast.detect(img, None)
+
+    print("Total Keypoints without nonmaxSuppression: ", len(kp))
+
+    img3 = cv.drawKeypoints(img, kp, None, color=(255, 0, 0))
+
+    cv.imshow("fast_false", img3)
