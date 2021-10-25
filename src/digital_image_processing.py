@@ -149,12 +149,18 @@ def frames_from_window(window_name, samples_path, runtime=5):
             tracker.init(native, bbox)
             first_frame = False
 
-        csrt_tracking_test(native, tracker)
+
+        (sucess, points) = tracking_points(native, tracker)
+        # deu_bom, (p1, p2) = csrt_tracking_test(native, tracker)
+
+        if sucess:
+            # draw tracking
+            cv.rectangle(kmeans, points[0], points[1], (255, 0, 0), 2, 1)
+            print("safe")
 
         # Prints
         # cv.imshow("Native resolution", native)
-        # cv.imshow("K-means quantization", kmeans)
-        # cv.imshow("Madeline tracking ", tracking)
+        cv.imshow("K-means quantization", kmeans)
 
         key = cv.waitKey(30) & 0xff
         if key == 27:
@@ -434,29 +440,15 @@ def image_registration_three(frame, model):
 
 
 # https://learnopencv.com/object-tracking-using-opencv-cpp-python/
-def csrt_tracking_test(frame, tracker):
+def tracking_points(frame, tracker):
     # Update tracker
-    ok, bbox = tracker.update(frame)
+    sucess, bbox = tracker.update(frame)
 
-    # Draw bounding box
-    if ok:
-        # Tracking success
-        p1 = (int(bbox[0]), int(bbox[1]))
-        p2 = (int(bbox[0] + bbox[2]), int(bbox[1] + bbox[3]))
-        cv.rectangle(frame, p1, p2, (255, 0, 0), 2, 1)
-        print("safe")
-    else:
-        # Tracking failure
-        cv.putText(frame, "Bucha", (100, 80), cv.FONT_HERSHEY_SIMPLEX, 0.75, (0, 0, 255), 2)
+    p1 = (int(bbox[0]), int(bbox[1]))
+    p2 = (int(bbox[0] + bbox[2]), int(bbox[1] + bbox[3]))
+    points = [p1, p2]
 
-    # Display tracker type on frame
-    # cv.putText(frame, tracker_type + " Tracker", (100, 20), cv.FONT_HERSHEY_SIMPLEX, 0.75, (50, 170, 50), 2);
-
-    # Display FPS on frame
-    # cv.putText(frame, "FPS : " + str(int(fps)), (100, 50), cv.FONT_HERSHEY_SIMPLEX, 0.75, (50, 170, 50), 2);
-
-    # Display result
-    cv.imshow("Tracking", frame)
+    return [sucess, points]
 
 
 # https://github.com/jagracar/OpenCV-python-tests/blob/master/OpenCV-tutorials/featureDetection/fast.py

@@ -1,27 +1,29 @@
 # Neurovisual Control Celeste
 
-Describe the project...
+[English](./README-en.md)
 
-## Packages
+Descrever o projeto...
+
+## Pacotes
 
 ```shell
 pip install opencv-python
 pip install tensorflow
 ```
 
-### Optional packages
+### Pacotes opcionais
 
-To get the target application window name
+Para obter o nome da janela do aplicativo de destino
 ```shell
 pip install PyGetWindow
 ```
 
-To have more background subtraction methods (opencv.bgsegm)
+Para ter mais métodos de subtração de fundo (opencv.bgsegm) 
 ```shell
 pip install opencv-contrib-python
 ```
 
-To realize Image Registration tests
+Para realizar testes de registro de imagem 
 ```shell
 pip install scikit-image
 ```
