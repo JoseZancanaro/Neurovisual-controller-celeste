@@ -1,9 +1,9 @@
-# Credits for https://www.youtube.com/watch?v=WymCpVUPWQ4
-
 import numpy as np
 import win32con
 import win32gui
 import win32ui
+
+# Credits for https://www.youtube.com/watch?v=WymCpVUPWQ4
 
 
 class WindowCapture:

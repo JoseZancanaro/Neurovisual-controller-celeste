@@ -1,12 +1,10 @@
-# Credits for https://github.com/machrisaa/tensorflow-vgg/blob/master/vgg16.py
-
 import inspect
 import os
-
 import numpy as np
 import tensorflow as tf
 import time
 
+# Credits for https://github.com/machrisaa/tensorflow-vgg/blob/master/vgg16.py
 VGG_MEAN = [103.939, 116.779, 123.68]
 
 
