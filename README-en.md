@@ -1,6 +1,11 @@
 # Neurovisual Control Celeste
 
-Describe the project...
+This project consisted of exploring the application of a neurovisual control to the 
+Celeste digital game environment. Challenges were faced related to the 
+Digital Image Processing of the frames and the integration of an 
+Artificial Intelligence for decision making and execution of the actions of the Madeline character (playable character).
+
+For more information and future work, see the article at: **LINK**
 
 ## Packages
 
