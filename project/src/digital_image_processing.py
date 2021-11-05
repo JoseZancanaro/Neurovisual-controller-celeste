@@ -59,6 +59,7 @@ def k_means_color_quantization(image, k=3):
     return segmented_image
 
 
+# https://docs.opencv.org/3.4.15/d0/d0a/classcv_1_1Tracker.html
 # https://learnopencv.com/object-tracking-using-opencv-cpp-python/
 def tracking_points(frame, tracker):
     # Update tracker
@@ -71,7 +72,7 @@ def tracking_points(frame, tracker):
     return [success, points]
 
 
-def frames_from_window(window_name, output_path, runtime=20):
+def frames_from_window(window_name, output_path, runtime=10):
     # Initialize the WindowCapture class
     win_cap = WindowCapture(window_name)
 
@@ -98,9 +99,8 @@ def frames_from_window(window_name, output_path, runtime=20):
         # Tracking of the main character
         if is_first_frame:
             # Optional: define a bounty box by mouse
-            # mouse_bbox = cv.selectROI(native, False)
-
-            tracker.init(native, bbox)
+            mouse_bbox = cv.selectROI(native, False)
+            tracker.init(native, mouse_bbox)
 
             first_frame = native.copy()
             is_first_frame = False
@@ -119,26 +119,24 @@ def frames_from_window(window_name, output_path, runtime=20):
             tracker.init(first_frame, bbox)
             print("Redefined tracking")
 
-        # @TODO: Future work: applies vgg16 with the input images
+        # @TODO: Future work: applies vgg16 with the images as input
 
-        # Image prints
+        # Images prints
         cv.imshow("Native resolution", native)
         cv.imshow("Pre-processing", blur_image)
         cv.imshow("K-means quantization", kmeans)
         cv.imshow("Madeline tracking", tracking)
 
         # If you want save the captured images
-        # cv.imwrite(output_path + "frame_%d.png" % count, image)
-        # count += 1
+        # cv.imwrite(output_path + "native/frame_%d.png" % count, native)
+        # cv.imwrite(output_path + "processed/frame_%d.png" % count, blur_image)
+        # cv.imwrite(output_path + "kmeans/frame_%d.png" % count, kmeans)
+        # cv.imwrite(output_path + "tracking/csrt/frame_%d.png" % count, tracking)
+        count += 1
 
         # Debug the loop rate
         print("FPS {}".format(1 / (timestamp.time() - loop_time)))
         loop_time = timestamp.time()
-
-        # Press 'q' to stop
-        stop_key = cv.waitKey(30) & 0xff
-        if stop_key == ord("q"):
-            break
 
     cv.destroyAllWindows()
 
@@ -293,8 +291,8 @@ def tracking_detection(frame, tracker, back_sub):
     boxes_ids = tracker.update(detections)
     for box_id in boxes_ids:
         x, y, w, h, id = box_id
-        cv.putText(roi, str(id), (x, y - 15), cv.FONT_HERSHEY_PLAIN, 2, (255, 0, 0), 2)
-        cv.rectangle(roi, (x, y), (x + w, y + h), (0, 255, 0), 3)
+        # cv.putText(roi, str(id), (x, y - 15), cv.FONT_HERSHEY_PLAIN, 2, (255, 0, 0), 2)
+        cv.rectangle(roi, (x, y), (x + w, y + h), (0, 0, 255), 1, 1)
 
     cv.imshow("ROI", roi)
 
@@ -316,6 +314,7 @@ def tracking_detection_images_test(images_path, bs_type="MOG2"):
         frame = cv.imread(file)
 
         mask = tracking_detection(frame, tracker, back_sub)
+
         cv.imshow("Mask", mask)
 
         # Press 'q' to stop
