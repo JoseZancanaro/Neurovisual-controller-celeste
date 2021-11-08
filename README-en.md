@@ -20,24 +20,24 @@ The set of images referring to the game's frame used in this study can be obtain
 ## Examples
 
 ### Capture, shrinking and blur
-![native](./samples/chapter-prologue/first-scenario/native/frame_165.png)
-![blur](./samples/chapter-prologue/first-scenario/blur/frame_165.png)
+![native](./readme-images/chapter-prologue/first-scenario/native/frame_165.png)
+![blur](./readme-images/chapter-prologue/first-scenario/blur/frame_165.png)
 
 ### *K-Means clustering* for color quantization
-![k-means](./samples/chapter-prologue/first-scenario/processed/frame_165.png)  
+![k-means](./readme-images/chapter-prologue/first-scenario/k-means/frame_165.png)  
 With *K* = 3.
 
 ### Character tracking with CSRT in the first scenario of the Prologue chapter
-![tracking-1](./samples/chapter-prologue/first-scenario/tracking/csrt/frame_115.png)
-![tracking-1](./samples/chapter-prologue/first-scenario/tracking/csrt/frame_165.png)  
-![tracking-1](./samples/chapter-prologue/first-scenario/tracking/csrt/frame_275.png)
-![tracking-1](./samples/chapter-prologue/first-scenario/tracking/csrt/frame_375.png)
+![tracking-1](./readme-images/chapter-prologue/first-scenario/tracking/csrt/frame_115.png)
+![tracking-1](./readme-images/chapter-prologue/first-scenario/tracking/csrt/frame_165.png)  
+![tracking-1](./readme-images/chapter-prologue/first-scenario/tracking/csrt/frame_275.png)
+![tracking-1](./readme-images/chapter-prologue/first-scenario/tracking/csrt/frame_375.png)
 
 ### Character tracking with CSRT in the second scenario of the Prologue chapter
-![tracking-1](./samples/chapter-prologue/second-scenario/tracking/csrt/frame_16.png)
-![tracking-1](./samples/chapter-prologue/second-scenario/tracking/csrt/frame_54.png)  
-![tracking-1](./samples/chapter-prologue/second-scenario/tracking/csrt/frame_81.png)
-![tracking-1](./samples/chapter-prologue/second-scenario/tracking/csrt/frame_100.png)
+![tracking-1](./readme-images/chapter-prologue/second-scenario/tracking/csrt/frame_16.png)
+![tracking-1](./readme-images/chapter-prologue/second-scenario/tracking/csrt/frame_54.png)  
+![tracking-1](./readme-images/chapter-prologue/second-scenario/tracking/csrt/frame_81.png)
+![tracking-1](./readme-images/chapter-prologue/second-scenario/tracking/csrt/frame_100.png)
 
 ## Packages
 

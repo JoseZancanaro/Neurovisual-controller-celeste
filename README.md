@@ -22,24 +22,25 @@ O conjunto de imagens referentes aos quadros do jogo, utilizados neste estudo po
 ## Exemplos
 
 ### Captura, encolhimento e desfoque
-![nativo](./samples/chapter-prologue/first-scenario/native/frame_165.png)
-![desfoque](./samples/chapter-prologue/first-scenario/blur/frame_165.png)
+![nativo](./readme-images/chapter-prologue/first-scenario/native/frame_165.png)
+![desfoque](./readme-images/chapter-prologue/first-scenario/blur/frame_165.png)
 
 ### *K-Means clustering* para quantização de cores
-![k-means](./samples/chapter-prologue/first-scenario/processed/frame_165.png)  
+![k-means](./readme-images/chapter-prologue/first-scenario/k-means/frame_165.png)  
 Com *K* = 3.
 
 ### Rastreamento da personagem com CSRT na primeira fase do capítulo Prólogo
-![tracking-1](./samples/chapter-prologue/first-scenario/tracking/csrt/frame_115.png)
-![tracking-1](./samples/chapter-prologue/first-scenario/tracking/csrt/frame_165.png)  
-![tracking-1](./samples/chapter-prologue/first-scenario/tracking/csrt/frame_275.png)
-![tracking-1](./samples/chapter-prologue/first-scenario/tracking/csrt/frame_375.png)
+![tracking-1](./readme-images/chapter-prologue/first-scenario/tracking/csrt/frame_115.png)
+![tracking-1](./readme-images/chapter-prologue/first-scenario/tracking/csrt/frame_165.png)  
+![tracking-1](./readme-images/chapter-prologue/first-scenario/tracking/csrt/frame_275.png)
+![tracking-1](./readme-images/chapter-prologue/first-scenario/tracking/csrt/frame_375.png)
 
 ### Rastreamento da personagem com CSRT na segunda fase do capítulo Prólogo
-![tracking-1](./samples/chapter-prologue/second-scenario/tracking/csrt/frame_16.png)
-![tracking-1](./samples/chapter-prologue/second-scenario/tracking/csrt/frame_54.png)  
-![tracking-1](./samples/chapter-prologue/second-scenario/tracking/csrt/frame_81.png)
-![tracking-1](./samples/chapter-prologue/second-scenario/tracking/csrt/frame_100.png)
+![tracking-1](./readme-images/chapter-prologue/second-scenario/tracking/csrt/frame_16.png)
+![tracking-1](./readme-images/chapter-prologue/second-scenario/tracking/csrt/frame_54.png)  
+![tracking-1](./readme-images/chapter-prologue/second-scenario/tracking/csrt/frame_81.png)
+![tracking-1](./readme-images/chapter-prologue/second-scenario/tracking/csrt/frame_100.png)
+
 
 ## Pacotes
 
