@@ -1,11 +1,13 @@
 # Neurovisual Controller Celeste
 
+## About this repository
+
 This project consisted of exploring the application of a neurovisual controller
 to the Celeste digital game environment.
 
 During development, game frames were captured, shrunk and later blurred.
-Then, they were arranged in the *K-Means clustering* procedure for color quantization.
-In addition, *Background Subtraction* algorithms of type KNN, MOG2, CNT, GMG, GSOC, LSBP and MOG have been set up to help with the
+Then, they were arranged in the K-Means clustering procedure for color quantization.
+In addition, Background Subtraction algorithms of type KNN, MOG2, CNT, GMG, GSOC, LSBP and MOG have been set up to help with the
 character tracking, but the game's camera shake in the scenarios of the Prologue chapter impeded the process. The tracking issue has been solved with the object tracking algorithm from the OpenCV CSRT module,
 and it showed promise in both the first and second scenarios of the Prologue.
 
@@ -15,11 +17,34 @@ due to the effort of the project having been completely focused on the Digital I
 For more information and future work, see the article at: **LINK**  
 The set of images referring to the game's frame used in this study can be obtained in: [HERE](https://drive.google.com/drive/folders/1YwSanqiYwS9-Y56eva9azxy7BfaU2H64?usp=sharing)
 
+## Examples
+
+### Capture, shrinking and blur
+![native](./samples/chapter-prologue/first-scenario/native/frame_165.png)
+![blur](./samples/chapter-prologue/first-scenario/blur/frame_165.png)
+
+### *K-Means clustering* for color quantization
+![k-means](./samples/chapter-prologue/first-scenario/processed/frame_165.png)  
+With *K* = 3.
+
+### Character tracking with CSRT in the first scenario of the Prologue chapter
+![tracking-1](./samples/chapter-prologue/first-scenario/tracking/csrt/frame_115.png)
+![tracking-1](./samples/chapter-prologue/first-scenario/tracking/csrt/frame_165.png)  
+![tracking-1](./samples/chapter-prologue/first-scenario/tracking/csrt/frame_275.png)
+![tracking-1](./samples/chapter-prologue/first-scenario/tracking/csrt/frame_375.png)
+
+### Character tracking with CSRT in the second scenario of the Prologue chapter
+![tracking-1](./samples/chapter-prologue/second-scenario/tracking/csrt/frame_16.png)
+![tracking-1](./samples/chapter-prologue/second-scenario/tracking/csrt/frame_54.png)  
+![tracking-1](./samples/chapter-prologue/second-scenario/tracking/csrt/frame_81.png)
+![tracking-1](./samples/chapter-prologue/second-scenario/tracking/csrt/frame_100.png)
+
 ## Packages
 
 ```shell
 pip install opencv-python
 pip install tensorflow
+pip install opencv-contrib-python
 ```
 
 ### Optional packages
@@ -27,11 +52,6 @@ pip install tensorflow
 To get the target application window name
 ```shell
 pip install PyGetWindow
-```
-
-To have more background subtraction methods (opencv.bgsegm)
-```shell
-pip install opencv-contrib-python
 ```
 
 To realize Image Registration tests
