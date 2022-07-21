@@ -16,8 +16,11 @@ e mostrou-se promissor tanto no primeiro quanto no segundo cenário do Prólogo.
 Infelizmente este estudo não conseguiu partir para as etapas de aplicação da Inteligência Artificial no jogo, 
 devido ao esforço do projeto ter sido voltado completamento para o Processamento Digital de Imagem dos quadros do jogo.
 
-Para mais informações e trabalhos futuros, veja o artigo em: **LINK**  
-O conjunto de imagens referentes aos quadros do jogo, utilizados neste estudo podem ser obtidas em: [AQUI](https://drive.google.com/drive/folders/1YwSanqiYwS9-Y56eva9azxy7BfaU2H64?usp=sharing)
+Para mais informações e trabalhos futuros, veja os artigos (NÃO PUBLICADOS): 
+- SBC (10 páginas): [artigo-sbc](https://drive.google.com/drive/folders/1awqB0IBz3mfYknwrCFT8yFit0jUfhpxj?usp=sharing)
+- Completo (70 páginas): [artigo-completo](https://drive.google.com/drive/folders/1urq45fw0PCxb68fonK6-go7NiwpDUJeM?usp=sharing) 
+
+O conjunto de imagens referentes aos quadros do jogo, e os videos deste estudo podem ser visualizados em: [imagens-e-videos](https://drive.google.com/drive/folders/12Togk7tzJd-ubR5bDLuNFji2HcSBhUEI?usp=sharing)
 
 ## Exemplos
 
