@@ -14,8 +14,11 @@ and it showed promise in both the first and second scenarios of the Prologue.
 Unfortunately this study was not able to go into the stages of applying Artificial Intelligence in the game,
 due to the effort of the project having been completely focused on the Digital Image Processing of the game frames.
 
-For more information and future work, see the article at: **LINK**  
-The set of images referring to the game's frame used in this study can be obtained in: [HERE](https://drive.google.com/drive/folders/1YwSanqiYwS9-Y56eva9azxy7BfaU2H64?usp=sharing)
+For more information and future work, see the articles (UNPUBLISHED):
+- SBC (10 pages): [article-sbc](https://drive.google.com/drive/folders/1awqB0IBz3mfYknwrCFT8yFit0jUfhpxj?usp=sharing)
+- Complete (70 pages): [complete-article](https://drive.google.com/drive/folders/1urq45fw0PCxb68fonK6-go7NiwpDUJeM?usp=sharing)
+
+The set of images referring to the game's frames, and the videos of this study can be viewed at: [images-and-videos](https://drive.google.com/drive/folders/12Togk7tzJd-ubR5bDLuNFji2HcSBhUEI?usp=sharing)
 
 ## Examples
 
